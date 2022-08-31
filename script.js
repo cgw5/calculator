@@ -12,7 +12,7 @@ class Calculator {
     }
 
     updateNumber(number) {
-        this.currentNumber = number
+        this.currentNumber = this.currentNumber + number.toString()
     }
 
     chooseOperation(operation) {
@@ -24,7 +24,8 @@ class Calculator {
     }
 
     updateDisplay() {
-        this.curNumTextElement.innertext = this.currentNumber 
+        this.curNumTextElement.innerText = this.currentNumber
+        console.log(this.currentNumber)
     }
 }
 

@@ -6,7 +6,7 @@
 body {
     padding: 0;
     margin: 0;
-    background: linear-gradient(to left, #FA6300, #131F33);
+    background: linear-gradient(60DEG, #FA6300, #131F33);
 }
 
 .calc {
@@ -43,12 +43,12 @@ body {
     word-break: break-all;
 }
 
-#display #preOp {
+#display .previous-number {
     color: rgba(255, 255, 255, .75);
     font-size: 1.5rem;
 }
 
-#display #curOp {
+#display .current-number {
     color: white;
     font-size: 2.5rem;
 }
