@@ -12,20 +12,57 @@ class Calculator {
     }
 
     updateNumber(number) {
-        this.currentNumber = this.currentNumber + number.toString()
+        if (number === '.' && this.currentNumber.includes('.')) return
+        this.currentNumber = this.currentNumber.toString() + number.toString()
     }
 
     chooseOperation(operation) {
+        if (this.currentNumber === '') return
+        if (this.previousNumber !== '') {
+            this.compute()
+        }
+        this.operation = operation
+        this.previousNumber = this.currentNumber + ' ' + operation.toString()
+        this.currentNumber = ''
+    }
 
+    signChange() {
+        this.currentNumber = parseFloat(this.currentNumber) * -1
+    }
+
+    percent() {
+        this.currentNumber = parseFloat(this.currentNumber) * 0.01
     }
 
     compute() {
-
+        let computation
+        const prev = parseFloat(this.previousNumber)
+        const current = parseFloat(this.currentNumber)
+        if (isNaN(prev) || isNaN(current)) return
+        switch (this.operation) {
+            case '+':
+                computation = prev + current
+                break
+            case '-':
+                computation = prev - current
+                break
+            case '*':
+                computation = prev * current
+                break
+            case '/':
+                computation = prev / current
+                break
+            default:
+                return
+        }
+        this.currentNumber = computation
+        this.operation = undefined
+        this.previousNumber = ''
     }
 
     updateDisplay() {
         this.curNumTextElement.innerText = this.currentNumber
-        console.log(this.currentNumber)
+        this.preNumTextElement.innerText = this.previousNumber
     }
 }
 
@@ -46,4 +83,31 @@ numberBtns.forEach(button => {
         calculator.updateNumber(button.innerText)
         calculator.updateDisplay()
     })
+})
+
+operationBtns.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText)
+        calculator.updateDisplay()
+    })
+})
+
+clearBtn.addEventListener('click', () => {
+    calculator.clear()
+    calculator.updateDisplay()
+});
+
+equalsBtn.addEventListener('click', () => {
+    calculator.compute()
+    calculator.updateDisplay()
+})
+
+signChangeBtn.addEventListener('click', () => {
+    calculator.signChange()
+    calculator.updateDisplay()
+})
+
+percentBtn.addEventListener('click', () => {
+    calculator.percent()
+    calculator.updateDisplay()
 })
